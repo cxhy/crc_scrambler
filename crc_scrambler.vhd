@@ -43,7 +43,7 @@ VARIABLE div_reg:STD_LOGIC_VECTOR(31 DOWNTO 0);
 END FUNCTION;
 --CRCÔËËãº¯Êý
 --------------------------------------------------------------
-FUNCTION mov(reg:STD_LOGIC_VECTOR;data:STD_LOGIC)RETURN STD_LOGIC_VECTOR IS 
+FUNCTION mov(reg:STD_LOGIC_VECTOR;data:STD_LOGIC)RETURN STD_LOGIC_VECTOR IS
 VARIABLE sc_reg:STD_LOGIC_VECTOR(31 DOWNTO 0);
         BEGIN
           sc_reg(0):=data;
@@ -63,7 +63,7 @@ VARIABLE temp:STD_LOGIC:='0';
         RETURN temp;
 END FUNCTION;
 --ÇóÒì»òº¯Êý
-----------------------------------------------------------------	 
+----------------------------------------------------------------
 BEGIN
 PROCESS(arst,clk)
 VARIABLE middle_data1:STD_LOGIC;--´æ·ÅÈÅÂëÆ÷µÄ³éÍ·Òì»òÖµ
@@ -87,7 +87,7 @@ VARIABLE cnt2:INTEGER:=0;--¼ÆÊý£¬ÔÚrdÓÐÐ§Ê±£¬¼ÇÒ»´ÎÊý£¬Ê¹crc_tempÊ±ÖÓ±£³ÖrdÌø±äÊ
 VARIABLE poly_wide:INTEGER:=-1;--¼ÆÊý¶àÏîÊ½Î»Êý£¬ÒòÎªCRCnµÄ¶àÏîÊ½ÊÇn+1Î»µÄËùÒÔ½«Æä³õÖµ¸³Îª-1
 BEGIN
 IF(arst='0')THEN
-  data_out<=(OTHERS=>'0'); 
+  data_out<=(OTHERS=>'0');
   out_valid<=(OTHERS=>'0');
   rtl_out<=(OTHERS=>'0');
 ELSIF(clk='1'AND clk'EVENT)THEN
@@ -99,7 +99,7 @@ ELSIF(clk='1'AND clk'EVENT)THEN
 	          poly_all(cnt+i):=addr(i+8);
 				 poly_wide:=poly_wide+1;
 			  END IF;
-		  END LOOP;	  
+		  END LOOP;
     END IF;
 --------------------------------------------------------
     IF(wr='0')THEN                                      --¸ù¾Ýaddr£¨17~16£©½«ÊäÈëµÄÊý¾ÝË³Ðòµ÷ÕûÎª´Ó¸ß×Ö½Úµ½µØÖ±½Ó´Ó¸ßÎ»µ½µÍÎ»
@@ -119,7 +119,7 @@ ELSIF(clk='1'AND clk'EVENT)THEN
 	       data_temp:=invert(data_in,addr(16));
 			 data_valid_temp:=invert(in_valid,addr(16));
 	     END IF;
---------------------------------------------------------		
+--------------------------------------------------------
 		  IF(addr(18)='0')THEN                            --¸ù¾Ýaddr£¨18£©ÊÇ·ñÎª0£¬ÅÐ¶¨ÊÇ·ñ½øÈëÈÅÂëÆ÷¹¦ÄÜ
 		    sel:=addr(20)&addr(19);                       --¸ù¾Ýaddr£¨20~19£©ÅÐ¶¨ÈÅÂëÆ÷Ä£Ê½
 	       FOR i IN 0 TO 32 LOOP
@@ -144,10 +144,10 @@ ELSIF(clk='1'AND clk'EVENT)THEN
 		         out_valid_temp(i):='1';
 		       ELSE
 		         out_temp(i):='0';
-		         out_valid_temp(i):='0'; 
+		         out_valid_temp(i):='0';
 		       END IF;
 		    END LOOP;
-	            		 
+
 	     ELSE
 --------------------------------------------------------
 		    FOR i IN N-1 DOWNTO 0 LOOP                    --Èç¹ûaddr£¨18£©Îª1Ôò½øÈëCRC¹¦ÄÜ
@@ -158,10 +158,10 @@ ELSIF(clk='1'AND clk'EVENT)THEN
 					 out_temp:=crc_reg;
 			 FOR i IN 0 TO 31 LOOP
 			       out_temp:=div(zero(0),out_temp,poly_all);
-		    END LOOP;   
+		    END LOOP;
         END IF;
---------------------------------------------------------		 
-		END IF;	 
+--------------------------------------------------------
+		END IF;
 	 IF(addr(18)='1')THEN                                --µ±Êý¾Ý´«µÝ¸øÊä³ö¶Ë¿Ú
 	   IF(rd='0')THEN                                    --µ±Ñ¡ÔñCRC¹¦ÄÜÊ±£¬Êä³öÊÜrd¿ØÖÆ£¬µ±rdÎªµÍµçÆ½Ê±£¬Êä³ö°´Ã¿´Î8Î»Êä³ö´Ówr±äÎª0µ½rd±äÎª0µÄÕâ¶ÎÊ±¼ä£¨»òÕßÊÇwrÎª0µÄÕâ¶ÎÊ±¼ä£©ÄÚÊäÈë¶Ë¿ÚÊäÈëµÄÓÐÐ§Êý¾ÝµÄCRCÂë
 		  IF(cnt2=0)THEN
